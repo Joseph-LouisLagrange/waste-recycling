@@ -1,0 +1,14 @@
+spring:
+  security:
+    user:
+      name: admin
+      password: 123456
+  mvc:
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+      date: dd/MM/yyyy
+      time: HH:mm:ss
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
