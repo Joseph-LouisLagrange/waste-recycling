@@ -8,8 +8,8 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 
 @Slf4j
-@ServerEndpoint(value = "/webSocket")
-@Component
+//@ServerEndpoint(value = "/webSocket")
+//@Component
 public class WsServerEndpoint {
 
     @OnOpen

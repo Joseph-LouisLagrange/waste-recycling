@@ -1,12 +1,15 @@
 package com.darwin.wasterecycling.config.security;
 
 
+import com.darwin.wasterecycling.config.security.applet.AppletAuthenticationProvider;
 import com.darwin.wasterecycling.config.security.applet.AppletLoginConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,9 +18,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import org.springframework.web.client.RestTemplate;
 
-import javax.inject.Inject;
 
-
+@Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity(debug = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,14 +28,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     RestTemplate restTemplate;
 
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(new AppletAuthenticationProvider(restTemplate));
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable();
+        http.cors()
+                .and()
+                .csrf().disable();
         // 加载所有登录方式的 Configurer
         loadLoginConfigurer(http);
     }
 
     private void loadLoginConfigurer(HttpSecurity http) throws Exception {
         http.apply(new AppletLoginConfigurer<>(restTemplate));
+
     }
 
 
@@ -42,5 +52,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
 }

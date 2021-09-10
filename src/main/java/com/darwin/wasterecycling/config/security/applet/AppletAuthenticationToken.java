@@ -1,13 +1,16 @@
 package com.darwin.wasterecycling.config.security.applet;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-@Data
+@Setter
+@Getter
 public class AppletAuthenticationToken extends AbstractAuthenticationToken {
 
     private String code;

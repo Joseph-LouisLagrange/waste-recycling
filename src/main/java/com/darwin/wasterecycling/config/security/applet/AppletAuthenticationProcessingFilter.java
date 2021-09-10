@@ -15,13 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-
 public class AppletAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
     private static final String CODE_KEY="code";
 
     public AppletAuthenticationProcessingFilter(AuthenticationManager authenticationManager){
         this("/login/applet");
+        super.setAuthenticationManager(authenticationManager);
     }
 
     protected AppletAuthenticationProcessingFilter(String defaultFilterProcessesUrl) {
